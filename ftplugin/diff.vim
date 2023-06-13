@@ -22,9 +22,20 @@ command -nargs=0 DD exec
       \   .'"echo \"Not a diff command under cursor or could not find file\""',
       \  ''
       \ )
-
 " Side-by-side diff in a new tab.
 nmap <buffer> <leader>d :DD<CR>
+
+" Toggle viewing white space changes in diff mode.
+function! s:ToggleWhiteSpace()
+  if &diffopt =~ "iwhiteall"
+    set diffopt-=iwhiteall
+    echo "Ignore white space: Off"
+  else
+    set diffopt+=iwhiteall
+    echo "Ignore white space: On"
+  endif
+endfunction
+nmap <leader>w :call <SID>ToggleWhiteSpace()<CR>
 
 " Next change
 nmap <buffer> ]c :echo search("^diff")<CR>
